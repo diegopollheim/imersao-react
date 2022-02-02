@@ -2,6 +2,7 @@ import { Box, Text, TextField, Image, Button } from '@skynexui/components';
 import React from 'react';
 import appConfig from '../config.json';
 import { createClient } from '@supabase/supabase-js'
+import { useRouter } from 'next/router';
 
 // Como fazer AJAX: https://medium.com/@omariosouto/entendendo-como-fazer-ajax-com-a-fetchapi-977ff20da3c6
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzY3MTc0NSwiZXhwIjoxOTU5MjQ3NzQ1fQ.CEQ0xXDtTtGzz0jYHpOWsXynC_HYJTOF3Km4WCx8EkA';
@@ -10,6 +11,8 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 
 export default function ChatPage() {
+  const roteamento = useRouter();
+  const usuarioLogado = roteamento.query.username;
   const [mensagem, setMensagem] = React.useState('');
   const [listaDeMensagens, setListaDeMensagens] = React.useState([]);
 
@@ -27,7 +30,7 @@ export default function ChatPage() {
   function handleNovaMensagem(novaMensagem) {
     const mensagem = {
       // id: listaDeMensagens.length + 1,
-      de: 'vanessametonini',
+      de: usuarioLogado,
       texto: novaMensagem,
     };
 
