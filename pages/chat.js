@@ -98,6 +98,12 @@ export default function ChatPage() {
                     })} */}
           <Box
             as="form"
+            onSubmit={(event) => {
+              
+                event.preventDefault();
+                handleNovaMensagem(mensagem);
+              }
+            }
             styleSheet={{
               display: 'flex',
               alignItems: 'center',
@@ -115,6 +121,7 @@ export default function ChatPage() {
                   handleNovaMensagem(mensagem);
                 }
               }}
+             
               placeholder="Insira sua mensagem aqui..."
               type="textarea"
               styleSheet={{
@@ -128,6 +135,7 @@ export default function ChatPage() {
                 color: appConfig.theme.colors.neutrals[200],
               }}
             />
+            <Button type="submit" iconName="arrowRight" />
           </Box>
         </Box>
       </Box>
