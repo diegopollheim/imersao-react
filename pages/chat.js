@@ -22,7 +22,6 @@ export default function ChatPage() {
       .select('*')
       .order('id', { ascending: false })
       .then(({ data }) => {
-        console.log('Dados da consulta:', data);
         setListaDeMensagens(data);
       });
   }, []);
@@ -41,7 +40,6 @@ export default function ChatPage() {
         mensagem
       ])
       .then(({ data }) => {
-        console.log('Criando mensagem: ', data);
         setListaDeMensagens([
           data[0],
           ...listaDeMensagens,
@@ -99,10 +97,10 @@ export default function ChatPage() {
           <Box
             as="form"
             onSubmit={(event) => {
-              
-                event.preventDefault();
-                handleNovaMensagem(mensagem);
-              }
+
+              event.preventDefault();
+              handleNovaMensagem(mensagem);
+            }
             }
             styleSheet={{
               display: 'flex',
@@ -121,7 +119,7 @@ export default function ChatPage() {
                   handleNovaMensagem(mensagem);
                 }
               }}
-             
+
               placeholder="Insira sua mensagem aqui..."
               type="textarea"
               styleSheet={{
@@ -162,7 +160,6 @@ function Header() {
 }
 
 function MessageList(props) {
-  console.log(props);
   return (
     <Box
       tag="ul"
