@@ -3,7 +3,7 @@ import React from 'react';
 import appConfig from '../config.json';
 import { createClient } from '@supabase/supabase-js'
 import { useRouter } from 'next/router';
-import { Skeleton, Stack } from '@mui/material';
+import { Backdrop, CircularProgress, Skeleton, Stack } from '@mui/material';
 
 
 
@@ -146,9 +146,24 @@ export default function ChatPage() {
   }
   else {
     return (
-      <Stack width="100%" sx={{ alignItems: "center", p: 3, height:"100vh" }}>
-        <Skeleton variant="rectangular" width="100%" height="100%"/>
-      </Stack>
+
+      <Box
+        styleSheet={{
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          backgroundColor: appConfig.theme.colors.primary[500],
+          backgroundImage: `url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)`,
+          backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
+          color: appConfig.theme.colors.neutrals['000']
+        }}
+      >
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={true}
+
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      </Box>
     )
   }
 }

@@ -111,6 +111,8 @@ export default function PaginaInicial() {
                 mainColorStrong: appConfig.theme.colors.primary[600],
               }}
             />
+
+          
           </Box>
           {/* Formulário */}
 
