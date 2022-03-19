@@ -4,6 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@emotion/react": "^11.8.2",
+    "@emotion/styled": "^11.8.1",
+    "@mui/material": "^5.5.1",
     "@skynexui/components": "1.24.2",
     "@supabase/supabase-js": "^1.29.1",
     "next": "latest",
