@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { Image, Text } from "@skynexui/components";
 import appConfig from "../../config.json";
 
@@ -30,34 +30,44 @@ export default function MessageList(props) {
               },
             }}
           >
-            <Box
-              styleSheet={{
-                marginBottom: "8px",
-              }}
-            >
+            <Stack direction="row" alignItems="center" sx={{ mb: 1 }}>
               <Image
                 styleSheet={{
-                  width: "20px",
-                  height: "20px",
+                  width: "30px",
+                  height: "30px",
                   borderRadius: "50%",
                   display: "inline-block",
                   marginRight: "8px",
                 }}
                 src={`https://github.com/${mensagem.de}.png`}
               />
-              <Text tag="strong">{mensagem.de}</Text>
-              <Text
-                styleSheet={{
-                  fontSize: "10px",
-                  marginLeft: "8px",
-                  color: appConfig.theme.colors.neutrals[300],
-                }}
-                tag="span"
-              >
-                {new Date().toLocaleDateString()}
-              </Text>
-            </Box>
-            {mensagem.texto}
+              <Box>
+                <Text tag="strong">{mensagem.de}</Text>
+                <Text
+                  styleSheet={{
+                    marginTop: "5px",
+                    fontSize: "10px",
+                    color: appConfig.theme.colors.neutrals[300],
+                  }}
+                  tag="span"
+                >
+                  {new Date().toLocaleDateString()}
+                </Text>
+              </Box>
+            </Stack>
+            <Typography
+              sx={{
+                borderRadius: "5px",
+                p: 1,
+                width: "fit-content",
+                maxWidth: "450px",
+                wordBreak: "break-all",
+
+                backgroundColor: appConfig.theme.colors.neutrals[500],
+              }}
+            >
+              {mensagem.texto}
+            </Typography>
           </Text>
         );
       })}
