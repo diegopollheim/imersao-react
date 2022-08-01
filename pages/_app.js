@@ -1,4 +1,5 @@
-import { SWRConfig } from "swr";
+import {SWRConfig} from "swr";
+import {AuthProvider} from "../src/contexts/AuthProvider";
 
 function GlobalStyle() {
   return (
@@ -31,20 +32,22 @@ function GlobalStyle() {
   );
 }
 
-export default function CustomApp({ Component, pageProps }) {
+export default function CustomApp({Component, pageProps}) {
   return (
-    <SWRConfig
-      value={{
-        fetcher: (...args) => fetch(...args).then((res) => res.json()),
-        revalidateOnFocus: true,
-        refreshInterval: 1500,
-        onError: (err) => {
-          console.error(err);
-        },
-      }}
-    >
-      <GlobalStyle />
-      <Component {...pageProps} />
-    </SWRConfig>
+    <AuthProvider>
+      <SWRConfig
+        value={{
+          fetcher: (...args) => fetch(...args).then((res) => res.json()),
+          revalidateOnFocus: true,
+          refreshInterval: 1500,
+          onError: (err) => {
+            console.error(err);
+          },
+        }}
+      >
+        <GlobalStyle />
+        <Component {...pageProps} />
+      </SWRConfig>
+    </AuthProvider>
   );
 }
