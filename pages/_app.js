@@ -1,5 +1,7 @@
+import { ThemeProvider} from "@mui/material";
 import {SWRConfig} from "swr";
 import {AuthProvider} from "../src/contexts/AuthProvider";
+import { theme } from "../src/style/theme";
 
 function GlobalStyle() {
   return (
@@ -35,19 +37,21 @@ function GlobalStyle() {
 export default function CustomApp({Component, pageProps}) {
   return (
     <AuthProvider>
-      <SWRConfig
-        value={{
-          fetcher: (...args) => fetch(...args).then((res) => res.json()),
-          revalidateOnFocus: true,
-          refreshInterval: 1500,
-          onError: (err) => {
-            console.error(err);
-          },
-        }}
-      >
-        <GlobalStyle />
-        <Component {...pageProps} />
-      </SWRConfig>
+      <ThemeProvider theme={theme}>
+        <SWRConfig
+          value={{
+            fetcher: (...args) => fetch(...args).then((res) => res.json()),
+            revalidateOnFocus: true,
+            refreshInterval: 1500,
+            onError: (err) => {
+              console.error(err);
+            },
+          }}
+        >
+          <GlobalStyle />
+          <Component {...pageProps} />
+        </SWRConfig>
+      </ThemeProvider>
     </AuthProvider>
   );
 }
