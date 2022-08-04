@@ -59,7 +59,7 @@ export default function Page() {
                 <TextField
                   {...register("email")}
                   label="Email"
-                  type='email'
+                  type="email"
                   placeholder="Seu melhor email"
                   required
                 />
@@ -73,7 +73,14 @@ export default function Page() {
                   <Button loading={load} variant="contained" type="submit" color="success">
                     Registrar
                   </Button>
-                  <Button variant="contained">Cancelar</Button>
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      route.push("/");
+                    }}
+                  >
+                    Cancelar
+                  </Button>
                 </Stack>
               </Stack>
             </Card>
