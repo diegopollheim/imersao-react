@@ -1,18 +1,20 @@
-import { Box, Text, TextField, Image, Button } from "@skynexui/components";
+import {Box, TextField, Button} from "@skynexui/components";
 import appConfig from "../config.json";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 import MessageList from "../src/components/MessageList";
 import Loading from "../src/components/Loading";
-import { useState } from "react";
+import {useState} from "react";
 import useSWR from "swr";
 import api from "../src/services/api";
+import db from "../src/lib/supaBaseConfig";
+import Header from "../src/components/Header";
 
 export default function ChatPage() {
-  const { query } = useRouter();
+  const {query, route} = useRouter();
   const usuarioLogado = query.username;
   const [mensagem, setMensagem] = useState("");
 
-  const { data: mensagens, mutate: mutateMensagens } = useSWR("/api/mensagens");
+  const {data: mensagens, mutate: mutateMensagens} = useSWR("/api/mensagens");
 
   function enviarNovaMensagem(e) {
     e.preventDefault();
@@ -76,7 +78,7 @@ export default function ChatPage() {
           }}
         >
           <MessageList mensagens={mensagens} />
-  
+
           <Box
             as="form"
             onSubmit={enviarNovaMensagem}
@@ -114,24 +116,5 @@ export default function ChatPage() {
         </Box>
       </Box>
     </Box>
-  );
-}
-
-function Header() {
-  return (
-    <>
-      <Box
-        styleSheet={{
-          width: "100%",
-          marginBottom: "16px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <Text variant="heading5">Chat</Text>
-        <Button variant="tertiary" colorVariant="neutral" label="Logout" href="/" />
-      </Box>
-    </>
   );
 }

@@ -6,6 +6,7 @@ export default function Loading() {
     <Box
       sx={{
         display: "flex",
+        position: "absolute",
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: appConfig.theme.colors.primary[500],

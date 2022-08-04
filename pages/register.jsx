@@ -1,41 +1,38 @@
-import {LoadingButton} from "@mui/lab";
 import {Button, Card, Container, Stack, TextField, Typography} from "@mui/material";
 import {useState} from "react";
 import {useForm} from "react-hook-form";
 import {toast, ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import appConfig from "../config.json";
-import api from "../src/services/api";
+import db from "../src/lib/supaBaseConfig";
+import Loading from "../src/components/Loading";
+import {useRouter} from "next/router";
 
 export default function Page() {
   const [load, setLoad] = useState(false);
   const {register, handleSubmit} = useForm();
+  const route = useRouter();
 
-  const registrar = (data) => {
+  const registrar = async (data) => {
     setLoad(true);
-    api
-      .post("/api/auth/register", {
-        email: data.email,
-        password: data.password,
-      })
-      .then((response) => {
-        console.log(response);
-        setLoad(false);
-        toast.success("Registro concluido com sucesso!", {
-          position: toast.POSITION.BOTTOM_CENTER,
-        });
-      })
-      .catch((error) => {
-        toast.error("Ops algo deu errado!", {
-          position: toast.POSITION.BOTTOM_CENTER,
-        });
-        console.log(error);
-        setLoad(false);
+    const {user, error} = await db.auth.signUp({
+      email: data.email,
+      password: data.password,
+    });
+
+    if (error) {
+      setLoad(false);
+      toast.error("Ops algo deu errado!", {
+        position: toast.POSITION.BOTTOM_CENTER,
       });
+    } else {
+      route.push("/chat");
+    }
   };
 
   return (
     <>
+      {load && <Loading />}
       <Stack
         sx={{
           backgroundColor: appConfig.theme.colors.primary[500],
@@ -62,6 +59,7 @@ export default function Page() {
                 <TextField
                   {...register("email")}
                   label="Email"
+                  type='email'
                   placeholder="Seu melhor email"
                   required
                 />
@@ -72,9 +70,9 @@ export default function Page() {
                   required
                 />
                 <Stack spacing={2}>
-                  <LoadingButton loading={load} variant="contained" type="submit" color="success">
+                  <Button loading={load} variant="contained" type="submit" color="success">
                     Registrar
-                  </LoadingButton>
+                  </Button>
                   <Button variant="contained">Cancelar</Button>
                 </Stack>
               </Stack>
