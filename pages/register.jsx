@@ -32,19 +32,26 @@ export default function Page() {
     } else {
       setLoad(false);
 
-      db.from("users")
-        .insert([
-          {
-            email: user.email,
-            nome: dataForm.nome,
-            sobrenome: dataForm.sobrenome,
-            avatar: key,
-          },
-        ])
-        .then(({data}) => {
-          console.log("Criado com sucesso!", data);
-        });
-      console.log("Usuário cadastrado:", user);
+      // Gera uma url public do avatar do usuário
+      const {publicURL, errorPublicURL} = db.storage
+        .from("avatars")
+        .getPublicUrl(key.split("/")[1]);
+
+      if (errorPublicURL) {
+        console.log(errorPublicURL);
+        return;
+      }
+
+      // Atualiza o usuário adicionando metadados
+      const {updatedUser, error} = await db.auth.update({
+        data: {
+          nome: dataForm.nome,
+          sobrenome: dataForm.sobrenome,
+          email: dataForm.email,
+          avatar: publicURL,
+        },
+      });
+
       route.push("/chat");
     }
   };
