@@ -1,17 +1,16 @@
 import {Box, TextField, Button} from "@skynexui/components";
 import appConfig from "../config.json";
-import {useRouter} from "next/router";
 import MessageList from "../src/components/MessageList";
 import Loading from "../src/components/Loading";
 import {useState} from "react";
 import useSWR from "swr";
 import api from "../src/services/api";
-import db from "../src/lib/supaBaseConfig";
 import Header from "../src/components/Header";
+import { useAuth } from "../src/contexts/AuthProvider";
 
 export default function ChatPage() {
-  const {query, route} = useRouter();
-  const usuarioLogado = query.username;
+  const {user} = useAuth();
+
   const [mensagem, setMensagem] = useState("");
 
   const {data: mensagens, mutate: mutateMensagens} = useSWR("/api/mensagens");
@@ -21,7 +20,8 @@ export default function ChatPage() {
 
     // Cria a mensagem para atualizar o cache
     const novaMensagem = {
-      de: usuarioLogado,
+      _user: user.id,
+      de: 'teste',
       texto: mensagem,
       created_at: new Date(),
     };

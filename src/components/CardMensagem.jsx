@@ -40,7 +40,15 @@ export default function CardMensagem({mensagem}) {
             src={`https://github.com/${mensagem.de}.png`}
           />
           <Box>
-            <Text tag="strong">{mensagem.de}</Text>
+            <Text
+              styleSheet={{
+                fontSize: "14px",
+                textTransform: "capitalize",
+              }}
+              tag="strong"
+            >
+              {mensagem.de}
+            </Text>
             <Text
               styleSheet={{
                 marginTop: "5px",

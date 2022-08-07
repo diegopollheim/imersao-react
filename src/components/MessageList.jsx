@@ -21,7 +21,7 @@ export default function MessageList({mensagens}) {
       }}
     >
       {mensagens.map((mensagem) => {
-        if (user == mensagem.de) return <CardMensagemUsuarioAtual mensagem={mensagem} />;
+        if (user.id == mensagem._user) return <CardMensagemUsuarioAtual mensagem={mensagem} />;
 
         return <CardMensagem mensagem={mensagem} />;
       })}

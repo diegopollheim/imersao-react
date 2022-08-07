@@ -1,8 +1,10 @@
 import {Box, Stack, Typography} from "@mui/material";
 import {Image, Text} from "@skynexui/components";
 import appConfig from "../../config.json";
+import {useAuth} from "../contexts/AuthProvider";
 
 export default function CardMensagemUsuarioAtual({mensagem}) {
+  const {user} = useAuth();
   return (
     <Stack direction="row">
       <Text
@@ -12,7 +14,7 @@ export default function CardMensagemUsuarioAtual({mensagem}) {
           borderRadius: "5px",
           padding: "6px",
           marginBottom: "12px",
-          borderTopRightRadius: '0px !important',
+          borderTopRightRadius: "0px !important",
           width: "fit-content",
           backgroundColor: " #313d49",
           display: "flex",
@@ -33,10 +35,20 @@ export default function CardMensagemUsuarioAtual({mensagem}) {
               display: "inline-block",
               marginRight: "8px",
             }}
-            src={`https://github.com/${mensagem.de}.png`}
+            src={user.user_metadata.avatar}
           />
           <Box>
-            <Text tag="strong">{mensagem.de}</Text>
+            <Text
+              styleSheet={{
+                fontSize: "14px",
+                textTransform: "capitalize",
+              }}
+              tag="strong"
+            >
+              {user.user_metadata.nome.toLowerCase() +
+                " " +
+                user.user_metadata.sobrenome.toLowerCase()}
+            </Text>
             <Text
               styleSheet={{
                 marginTop: "5px",
