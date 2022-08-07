@@ -144,7 +144,7 @@ export default function Page() {
                       }}
                       {...register("email")}
                       type="email"
-                      placeholder="Seu melhor email"
+                      placeholder="Seu melhor e-mail"
                       required
                     />
                   </Box>
