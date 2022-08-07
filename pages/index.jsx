@@ -1,9 +1,9 @@
-import {Box, Text, Image} from "@skynexui/components";
+import {Box, Text} from "@skynexui/components";
 import React from "react";
 import {useRouter} from "next/router";
 import appConfig from "../config.json";
 import {useForm} from "react-hook-form";
-import {Button, Stack, TextField, Typography} from "@mui/material";
+import {Button, Stack, TextField, Typography, Image} from "@mui/material";
 
 function Titulo(props) {
   const Tag = props.tag || "h1";
@@ -60,9 +60,11 @@ export default function PaginaInicial() {
             alignItems: "center",
             justifyContent: "space-between",
             flexDirection: {
-              xs: "column",
+              xs: "column-reverse",
               sm: "row",
             },
+            columnGap: "25px",
+            rowGap: "25px",
             width: "100%",
             maxWidth: "700px",
             borderRadius: "5px",
@@ -151,8 +153,8 @@ export default function PaginaInicial() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              maxWidth: "200px",
               padding: "16px",
+              backgroundImage: 'url("logoPNG.png")',
               backgroundColor: appConfig.theme.colors.neutrals[800],
               border: "1px solid",
               borderColor: appConfig.theme.colors.neutrals[999],
@@ -161,24 +163,9 @@ export default function PaginaInicial() {
               minHeight: "240px",
             }}
           >
-            <Image
-              styleSheet={{
-                borderRadius: "50%",
-                marginBottom: "16px",
-              }}
-              src={`https://github.com/${username}.png`}
-            />
-            <Text
-              variant="body4"
-              styleSheet={{
-                color: appConfig.theme.colors.neutrals[200],
-                backgroundColor: appConfig.theme.colors.neutrals[900],
-                padding: "3px 10px",
-                borderRadius: "1000px",
-              }}
-            >
-              {username}
-            </Text>
+            <Stack sx={{m: "auto"}}>
+              <img src="/logoPNG.png" width={250} />
+            </Stack>
           </Box>
           {/* Photo Area */}
         </Box>
