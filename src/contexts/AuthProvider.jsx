@@ -5,14 +5,14 @@ import db from "../lib/supaBaseConfig";
 export const AuthContext = createContext();
 
 export const AuthProvider = (props) => {
-  const {query} = useRouter();
-  // const user = query.username;
+  const route = useRouter();
   const [user, setUser] = useState();
 
   useEffect(() => {
     let user = db.auth.user();
     if (user) {
       setUser(user);
+      route.push("/chat");
       console.log(user);
     }
   }, []);

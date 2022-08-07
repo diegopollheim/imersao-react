@@ -1,9 +1,12 @@
 import {Box, Text} from "@skynexui/components";
-import React from "react";
+import React, {useState} from "react";
 import {useRouter} from "next/router";
 import appConfig from "../config.json";
 import {useForm} from "react-hook-form";
 import {Button, Stack, TextField, Typography, Image} from "@mui/material";
+import db from "../src/lib/supaBaseConfig";
+import {toast} from "react-toastify";
+import Loading from "../src/components/Loading";
 
 function Titulo(props) {
   const Tag = props.tag || "h1";
@@ -23,12 +26,26 @@ function Titulo(props) {
 }
 
 export default function PaginaInicial() {
+  const [load, setLoad] = useState(false);
+  const [error, setError] = useState();
   const {register, handleSubmit} = useForm();
-  const [username, setUsername] = React.useState("diegopollheim");
   const route = useRouter();
 
-  function handleLogin(data) {
-    console.log(data);
+  async function handleLogin(data) {
+    // console.log(data);
+    setLoad(true);
+    const {user, error} = await db.auth.signIn({
+      email: data.email,
+      password: data.password,
+    });
+    if (error) {
+      setLoad(false);
+      setError({message: error.message});
+      console.log(error);
+      toast.error("Email ou senha incorreto, verifique e tente novamente!");
+      return;
+    }
+    route.push("/chat");
   }
 
   const TextLabel = ({children}) => {
@@ -41,6 +58,7 @@ export default function PaginaInicial() {
 
   return (
     <>
+      {load && <Loading />}
       <Box
         styleSheet={{
           display: "flex",
@@ -96,10 +114,13 @@ export default function PaginaInicial() {
               Bate Papo DEV
             </Text>
 
-            <Stack spacing={2} mb={3} width="100%">
+            <Stack mb={1} width="100%">
               <Box>
                 <TextLabel>Email</TextLabel>
                 <TextField
+                  onFocus={() => setError()}
+                  error={error}
+                  helperText={error ? error.message : " "}
                   inputProps={{
                     style: {
                       padding: "10px",
@@ -116,13 +137,16 @@ export default function PaginaInicial() {
               <Box>
                 <TextLabel>Senha</TextLabel>
                 <TextField
+                  onFocus={() => setError()}
+                  error={error}
+                  helperText={error ? error.message : " "}
                   inputProps={{
                     style: {
                       padding: "10px",
                     },
                   }}
                   {...register("password")}
-                  placeholder="digite sua senha"
+                  placeholder="Digite sua senha"
                   fullWidth
                   required
                 />
