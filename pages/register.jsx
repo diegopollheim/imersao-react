@@ -31,8 +31,21 @@ export default function Page() {
       });
     } else {
       setLoad(false);
+
+      db.from("users")
+        .insert([
+          {
+            email: user.email,
+            nome: dataForm.nome,
+            sobrenome: dataForm.sobrenome,
+            avatar: key,
+          },
+        ])
+        .then(({data}) => {
+          console.log("Criado com sucesso!", data);
+        });
       console.log("Usuário cadastrado:", user);
-      // route.push("/chat");
+      route.push("/chat");
     }
   };
 
