@@ -30,7 +30,9 @@ export default function Page() {
         position: toast.POSITION.BOTTOM_CENTER,
       });
     } else {
-      route.push("/chat");
+      setLoad(false);
+      console.log("Usuário cadastrado:", user);
+      // route.push("/chat");
     }
   };
 

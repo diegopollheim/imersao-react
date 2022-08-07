@@ -62,7 +62,7 @@ export default function UploaderAvatar({setKey}) {
       </>
     );
   }
-  console.log(file);
+
   if (!file) {
     return (
       <Dropzone accept="image/*" onDropAccepted={handleUploader}>
@@ -81,7 +81,7 @@ export default function UploaderAvatar({setKey}) {
               borderColor: "#fff",
             }}
           >
-            <input {...getInputProps()} required/>
+            <input {...getInputProps()} required />
             <Stack justifyContent="center" alignItems="center" height="100%">
               {showMessageUpload(isDragActive, isDragReject)}
             </Stack>
