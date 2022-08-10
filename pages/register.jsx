@@ -52,6 +52,17 @@ export default function Page() {
         },
       });
 
+     await db.from("users").insert([
+        // Tem que ser um objeto com os MESMOS CAMPOS que você escreveu no supabase
+        {
+          id: user.id,
+          nome: dataForm.nome,
+          sobrenome: dataForm.sobrenome,
+          email: dataForm.email,
+          avatar: publicURL,
+        },
+      ]);
+
       route.push("/chat");
     }
   };
