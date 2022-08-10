@@ -42,7 +42,7 @@ export default function CustomApp({Component, pageProps}) {
           value={{
             fetcher: (...args) => fetch(...args).then((res) => res.json()),
             revalidateOnFocus: true,
-            refreshInterval: 1500,
+            // refreshInterval: 1500,
             onError: (err) => {
               console.error(err);
             },
