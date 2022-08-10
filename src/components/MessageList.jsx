@@ -21,9 +21,19 @@ export default function MessageList({mensagens}) {
       }}
     >
       {mensagens.map((mensagem) => {
-        if (user.id == mensagem._user) return <CardMensagemUsuarioAtual mensagem={mensagem} />;
+        if (user.id == mensagem._user) {
+          return (
+            <div key={mensagem.id}>
+              <CardMensagemUsuarioAtual mensagem={mensagem} />
+            </div>
+          );
+        }
 
-        return <CardMensagem mensagem={mensagem} />;
+        return (
+          <div key={mensagem.id}>
+            <CardMensagem mensagem={mensagem} />
+          </div>
+        );
       })}
     </Box>
   );
