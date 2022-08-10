@@ -6,9 +6,8 @@ import {useAuth} from "../contexts/AuthProvider";
 export default function CardMensagemUsuarioAtual({mensagem}) {
   const {user} = useAuth();
   return (
-    <Stack direction="row">
+    <Stack  direction="row">
       <Text
-        key={mensagem.id}
         tag="li"
         styleSheet={{
           borderRadius: "5px",

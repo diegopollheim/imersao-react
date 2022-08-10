@@ -1,8 +1,23 @@
 import {Box, Stack, Typography} from "@mui/material";
 import {Image, Text} from "@skynexui/components";
+import {useEffect, useState} from "react";
 import appConfig from "../../config.json";
+import db from "../lib/supaBaseConfig";
 
 export default function CardMensagem({mensagem}) {
+  const [userMessage, setUserMessage] = useState();
+
+  // if (error) {
+  //   console.log(error);
+  // }
+  useEffect(() => {
+    db.from("users")
+      .select("*")
+      .eq("id", mensagem._user)
+      .then((response) => {
+        setUserMessage(response.data[0]);
+      });
+  }, []);
   return (
     <Stack direction="row">
       <Box
@@ -14,7 +29,6 @@ export default function CardMensagem({mensagem}) {
         }}
       />
       <Text
-        key={mensagem.id}
         tag="li"
         styleSheet={{
           borderRadius: "5px",
@@ -37,7 +51,7 @@ export default function CardMensagem({mensagem}) {
               display: "inline-block",
               marginRight: "8px",
             }}
-            src={`https://github.com/${mensagem.de}.png`}
+            src={userMessage?.avatar}
           />
           <Box>
             <Text
@@ -47,7 +61,7 @@ export default function CardMensagem({mensagem}) {
               }}
               tag="strong"
             >
-              {mensagem.de}
+              {userMessage?.nome + " " + userMessage?.sobrenome}
             </Text>
             <Text
               styleSheet={{
