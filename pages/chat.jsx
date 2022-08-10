@@ -21,7 +21,6 @@ export default function ChatPage() {
     // Cria a mensagem para atualizar o cache
     const novaMensagem = {
       _user: user.id,
-      de: 'teste',
       texto: mensagem,
       created_at: new Date(),
     };
@@ -31,7 +30,7 @@ export default function ChatPage() {
     // Chama api que fará o insert no banco da novaMensagem
     api.post("/api/mensagens", {
       novaMensagem: novaMensagem,
-    });
+    })
   }
 
   if (!mensagens) return <Loading />;
@@ -110,6 +109,7 @@ export default function ChatPage() {
                 marginRight: "12px",
                 color: appConfig.theme.colors.neutrals[200],
               }}
+              required
             />
             <Button type="submit" iconName="arrowRight" />
           </Box>
