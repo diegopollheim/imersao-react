@@ -6,7 +6,8 @@ import {useState} from "react";
 import useSWR from "swr";
 import api from "../src/services/api";
 import Header from "../src/components/Header";
-import { useAuth } from "../src/contexts/AuthProvider";
+import {useAuth} from "../src/contexts/AuthProvider";
+import db from "../src/lib/supaBaseConfig";
 
 export default function ChatPage() {
   const {user} = useAuth();
@@ -24,13 +25,17 @@ export default function ChatPage() {
       texto: mensagem,
       created_at: new Date(),
     };
-    mutateMensagens([novaMensagem, ...mensagens]);
+    mutateMensagens([novaMensagem, ...mensagens], false);
     setMensagem("");
 
     // Chama api que fará o insert no banco da novaMensagem
-    api.post("/api/mensagens", {
-      novaMensagem: novaMensagem,
-    })
+    api
+      .post("/api/mensagens", {
+        novaMensagem: novaMensagem,
+      })
+      .then((response) => {
+        mutateMensagens();
+      });
   }
 
   if (!mensagens) return <Loading />;
