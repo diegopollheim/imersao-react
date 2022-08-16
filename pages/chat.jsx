@@ -1,4 +1,4 @@
-import {Box, TextField, Button} from "@skynexui/components";
+import {TextField, Button} from "@skynexui/components";
 import appConfig from "../config.json";
 import MessageList from "../src/components/MessageList";
 import Loading from "../src/components/Loading";
@@ -7,7 +7,8 @@ import useSWR from "swr";
 import api from "../src/services/api";
 import Header from "../src/components/Header";
 import {useAuth} from "../src/contexts/AuthProvider";
-import db from "../src/lib/supaBaseConfig";
+import SendIcon from "@mui/icons-material/Send";
+import {Box, IconButton, Stack} from "@mui/material";
 
 export default function ChatPage() {
   const {user} = useAuth();
@@ -42,7 +43,7 @@ export default function ChatPage() {
 
   return (
     <Box
-      styleSheet={{
+      sx={{
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -54,23 +55,21 @@ export default function ChatPage() {
         color: appConfig.theme.colors.neutrals["000"],
       }}
     >
-      <Box
-        styleSheet={{
-          display: "flex",
-          flexDirection: "column",
+      <Stack
+        sx={{
           flex: 1,
           boxShadow: "0 2px 10px 0 rgb(0 0 0 / 20%)",
           borderRadius: "5px",
           backgroundColor: appConfig.theme.colors.neutrals[700],
           height: "100%",
-          maxWidth: "700px",
-          maxHeight: "95vh",
-          padding: "32px",
+          maxWidth: "900px",
+          maxHeight: ["100vh", "90vh"],
+          padding: ["15px", "32px"],
         }}
       >
         <Header />
         <Box
-          styleSheet={{
+          sx={{
             position: "relative",
             display: "flex",
             flex: 1,
@@ -83,8 +82,9 @@ export default function ChatPage() {
         >
           <MessageList mensagens={mensagens} />
 
-          <Box
-            as="form"
+          <Stack
+            component="form"
+            direction="row"
             onSubmit={enviarNovaMensagem}
             styleSheet={{
               display: "flex",
@@ -116,10 +116,13 @@ export default function ChatPage() {
               }}
               required
             />
-            <Button type="submit" iconName="arrowRight" />
-          </Box>
+
+            <IconButton type="submit" color="success" size="large">
+              <SendIcon />
+            </IconButton>
+          </Stack>
         </Box>
-      </Box>
+      </Stack>
     </Box>
   );
 }
