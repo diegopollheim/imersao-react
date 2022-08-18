@@ -56,7 +56,7 @@ export default function CardMensagemUsuarioAtual({mensagem}) {
               }}
               tag="span"
             >
-              {new Date().toLocaleDateString()}
+                {new Date(mensagem.created_at).toLocaleDateString()}
             </Text>
           </Box>
         </Stack>

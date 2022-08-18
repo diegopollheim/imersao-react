@@ -1,15 +1,13 @@
-import {Box, Stack, Typography} from "@mui/material";
+import {Box, Skeleton, Stack, Typography} from "@mui/material";
 import {Image, Text} from "@skynexui/components";
 import {useEffect, useState} from "react";
 import appConfig from "../../config.json";
 import db from "../lib/supaBaseConfig";
+import SkeletonCardMessage from "./SkeletonCardMessage";
 
 export default function CardMensagem({mensagem}) {
   const [userMessage, setUserMessage] = useState();
 
-  // if (error) {
-  //   console.log(error);
-  // }
   useEffect(() => {
     db.from("users")
       .select("*")
@@ -18,6 +16,9 @@ export default function CardMensagem({mensagem}) {
         setUserMessage(response.data[0]);
       });
   }, []);
+
+if (!userMessage) {return <SkeletonCardMessage />}
+
   return (
     <Stack direction="row">
       <Box
@@ -53,6 +54,7 @@ export default function CardMensagem({mensagem}) {
             }}
             src={userMessage?.avatar}
           />
+
           <Box>
             <Text
               styleSheet={{
@@ -71,7 +73,7 @@ export default function CardMensagem({mensagem}) {
               }}
               tag="span"
             >
-              {new Date().toLocaleDateString()}
+              {new Date(mensagem.created_at).toLocaleDateString()}
             </Text>
           </Box>
         </Stack>
