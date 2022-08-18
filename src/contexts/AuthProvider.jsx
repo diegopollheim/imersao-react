@@ -13,7 +13,7 @@ export const AuthProvider = (props) => {
     if (user) {
       setUser(user);
       route.push("/chat");
-      console.log(user);
+      // console.log(user);
     }
   }, []);
 

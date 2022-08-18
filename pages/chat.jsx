@@ -9,6 +9,8 @@ import Header from "../src/components/Header";
 import {useAuth} from "../src/contexts/AuthProvider";
 import SendIcon from "@mui/icons-material/Send";
 import {Box, IconButton, Stack} from "@mui/material";
+import db from "../src/lib/supaBaseConfig";
+import {useEffect} from "react";
 
 export default function ChatPage() {
   const {user} = useAuth();
@@ -39,7 +41,16 @@ export default function ChatPage() {
       });
   }
 
-  if (!mensagens) return <Loading />;
+  // Monitora alteracoes na tabela de mensagens e atualiza as mensagens em cache
+  useEffect(() => {
+    db.from("mensagens")
+      .on("*", (payload) => {
+        mutateMensagens();
+      })
+      // .subscribe();
+  }, []);
+
+  if (!mensagens || !user) return <Loading />;
 
   return (
     <Box
